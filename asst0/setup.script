@@ -1,0 +1,30 @@
+Script started on 2026-09-07 12:49:41-05:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="122" LINES="24"]
+[?25l[>c7[1;2r[2;1H[1B[6n[;r[2;1H[1B[6n[r8[?2004h7[8m[K[▽][6n[K[▶][6n[K[龼][6n[K[鿄][6n[K[ㆸ][6n[K[ힰ][6n[K[゙][6n[K[鿍][6n[K[🤻][6n[K[ㄮ][6n[K[ㄯ][6n[K[𖿢][6n[K[㋿][6n[K[ㆻ][6n[K[鿽][6n[K[𛄲][6n[K[⿼][6n[K[㇤][6n[K(B[m8[?25h[?25l(B[m[2K]0;andrew@andrews-laptop: ~/cs161[0;1;32mandrew@andrews-laptop(B[m:[0;1;34m~/cs161(B[m$ [?25h[?25l(B[m[2K]0;andrew@andrews-laptop: ~/cs161[0;1;32mandrew@andrews-laptop(B[m:[0;1;34m~/cs161(B[m$ [?25h[?25l(B[m]0;andrew@andrews-laptop: ~/cs161[0;1;32mandrew@andrews-laptop(B[m:[0;1;34m~/cs161(B[m$ [?25h[?25l[0;31m[0;31mm(B[m[K[?25h[?25l(B[m[1D[0;38;5;144m[0;38;5;144mm[0;38;5;242man ld(B[m[K(B[m[5D[?25h[?25l(B[m[1D[0;31m[0;31mmk(B[m[K[?25h[?25l(B[m
+
+
+
+
+
+(B[m[5A[6L[2K(B[m[1A[31C[0;38;5;144m[0;38;5;144mmk[0;38;5;242mdir -p ~/bin[K
+cat > ~/bin/vivado <<'EOF'[K
+#!/bin/bash[K
+export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:/usr/lib[K
+exec /home/andrew/apps/vivado/2026.1/Vivado/bin/vivado "$@"[K
+EOF[K
+chmod +x ~/bin/vivado(B[m[K(B[m[6A[12C[?25h[?25l[0;38;5;144md[?25h[?25l[0;38;5;144mi[?25h[?25l[0;38;5;144mr[?25h[?25l(B[m[1B[2K[6M(B[m[1A[31C[0;38;5;144m[0;38;5;144mmkdir[0;38;5;253m (B[m[K[?25h[?25l(B[m
+
+
+
+
+
+(B[m[5A[6L[2K(B[m[1A[31C[0;38;5;144m[0;38;5;144mmkdir[0;38;5;253m [0;38;5;242m-p ~/bin[K
+cat > ~/bin/vivado <<'EOF'[K
+#!/bin/bash[K
+export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:/usr/lib[K
+exec /home/andrew/apps/vivado/2026.1/Vivado/bin/vivado "$@"[K
+EOF[K
+chmod +x ~/bin/vivado(B[m[K(B[m[6A[16C[?25h[?25l(B[m[1B[2K[6M(B[m[1A[31C[0;38;5;144m[0;38;5;144mmkdir[0;38;5;253m a(B[m[K[?25h[?25l(B[m[1D[0;38;5;253mas(B[m[K[?25h[?25l(B[m[2D[0;38;5;253mass(B[m[K[?25h[?25l(B[m[3D[0;38;5;253masst(B[m[K[?25h[?25l(B[m[4D[0;38;5;253masst0(B[m[K[?25h[?25l(B[m
+[?25h[?25l[?2004l[?25h(B[m7[0;94m[ble: EOF](B[m(B[m8[120C  [K[?25l[?2004h[?25h[?25l(B[m[2K]0;andrew@andrews-laptop: ~/cs161[0;1;32mandrew@andrews-laptop(B[m:[0;1;34m~/cs161(B[m$ [?25h[?25l[0;31m[0;31mm(B[m[K[?25h[?25l(B[m[1D[0;38;5;144m[0;38;5;144mm[0;38;5;242mkdir asst0(B[m[K(B[m[10D[?25h[?25l(B[m[1D[0;38;5;144m[0;38;5;144mmv(B[m[K[?25h[?25l(B[m[2D[0;38;5;144m[0;38;5;144mmv[0;38;5;242m arm-gnu-toolchain-15.3.rel1-x86_64-aarch64-none-elf ~/apps/(B[m[K(B[m[60D[?25h[?25l(B[m[2D[0;38;5;144m[0;38;5;144mmv[0;38;5;253m (B[m[K[?25h[?25l(B[m[3D[0;38;5;144m[0;38;5;144mmv[0;38;5;253m [0;38;5;242marm-gnu-toolchain-15.3.rel1-x86_64-aarch64-none-elf ~/apps/(B[m[K(B[m[59D[?25h[?25l(B[m[3D[0;38;5;144m[0;38;5;144mmv[0;38;5;253m o(B[m[K[?25h[?25l(B[m[1D[0;4;38;5;252m[0;4;38;5;252mo[0;38;5;242ms161-1.10(B[m[K(B[m[9D[?25h[?25l[0;4;38;5;252ms[?25h[?25l(B[m[2D[0;4;38;5;252m[0;4;38;5;252mos161-1.10/(B[m[K[?25h[?25l(B[m[11D[0;4;38;5;252m[0;4;38;5;252mos161-1.10/[0;38;5;242m.cvsignore(B[m[K(B[m[10D[?25h[?25l(B[m[11D[0;4;38;5;252m[0;4;38;5;252mos161-1.10/[0;38;5;253m (B[m[K[?25h[?25l(B[m[12D[0;4;38;5;252m[0;4;38;5;252mos161-1.10/[0;38;5;253m o(B[m[K[?25h[?25l(B[m[1D[0;4;38;5;252m[0;4;38;5;252mo[0;38;5;242ms161-1.10(B[m[K(B[m[9D[?25h[?25l[0;4;38;5;252ms[?25h[?25l[0;4;38;5;252m1[?25h[?25l[0;4;38;5;252m6[?25h[?25l[0;4;38;5;252m1[?25h[?25l(B[m[5D[0;38;5;253mos161(B[m[K(B[m
+[?25h[?25l[?2004l[?25h(B[m7[0;94m[ble: EOF](B[m(B[m8[120C  [K[?25l[?2004h[?25h[?25l(B[m[2K]0;andrew@andrews-laptop: ~/cs161[0;1;32mandrew@andrews-laptop(B[m:[0;1;34m~/cs161(B[m$ [?25h[?25l[0;94m[ble: exit](B[m
+[?25h[?25l[?2004l[?25h
+Script done on 2026-09-07 12:50:29-05:00 [COMMAND_EXIT_CODE="0"]
