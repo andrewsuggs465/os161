@@ -17,6 +17,8 @@
 #include <syscall.h>
 #include <version.h>
 
+void hello(void);
+
 /*
  * These two pieces of data are maintained by the makefiles and build system.
  * buildconfig is the name of the config file the kernel was configured with.
@@ -159,7 +161,7 @@ int
 kmain(char *arguments)
 {
 	boot();
-
+	hello();
 	menu(arguments);
 
 	/* Should not get here */

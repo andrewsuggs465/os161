@@ -1,0 +1,2 @@
+Use cloc to count code lines in files and folders
+debugging message: DEBUG(DB_DEVICE, "A sample device message.\n);

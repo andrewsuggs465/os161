@@ -1,0 +1,2 @@
+1) #define sp  $29    /* stack pointer */  /home/andrew/cs161/os161/kern/arch/mips/include/asmdefs.h
+2) lamebus0 /home/andrew/cs161/os161/kern/conf/ASST0

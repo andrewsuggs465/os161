@@ -1,0 +1,63 @@
+Script started on 2026-09-09 11:23:51-05:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="80" LINES="24"]
+[?25l[>c7[1;2r[2;1H[1B[6n[;r[2;1H[1B[6n[r8[?2004h7[8m[K[▽][6n[K[▶][6n[K[龼][6n[K[鿄][6n[K[ㆸ][6n[K[ힰ][6n[K[゙][6n[K[鿍][6n[K[🤻][6n[K[ㄮ][6n[K[ㄯ][6n[K[𖿢][6n[K[㋿][6n[K[ㆻ][6n[K[鿽][6n[K[𛄲][6n[K[⿼][6n[K[㇤][6n[K(B[m8[?25h[?25l(B[m[2K]0;andrew@andrews-laptop: ~/cs161[0;1;32mandrew@andrews-laptop(B[m:[0;1;34m~/cs161(B[m$ [?25h[?25l(B[m[2K]0;andrew@andrews-laptop: ~/cs161[0;1;32mandrew@andrews-laptop(B[m:[0;1;34m~/cs161(B[m$ [?25h[?25l(B[m]0;andrew@andrews-laptop: ~/cs161[0;1;32mandrew@andrews-laptop(B[m:[0;1;34m~/cs161(B[m$ [?25h[?25l[0;31m[0;31ml(B[m[K[?25h[?25l(B[m[1D[0;38;5;144m[0;38;5;144ml[0;38;5;242ms(B[m[K(B[m[1D[?25h[?25l[0;38;5;144ms(B[m[K[?25h[?25l(B[m
+[?25h[?25l[?2004l[?25h[0m[01;34masst0[0m  [01;34mcs161-binutils-1.5[0m  [01;34mcs161-gdb-1.5[0m  README.md  [01;34msys161-1.14[0m  [01;34mtools[0m
+[01;34mbin[0m    [01;34mcs161-gcc-1.5[0m       [01;34mos161[0m          [01;34mroot[0m       sys161.conf  typescript
+(B[m7[0;94m[ble: EOF](B[m(B[m8[78C  [K[?25l[?2004h[?25h[?25l(B[m[2K]0;andrew@andrews-laptop: ~/cs161[0;1;32mandrew@andrews-laptop(B[m:[0;1;34m~/cs161(B[m$ [?25h[?25l[0;31m[0;31mc(B[m[K[?25h[?25l(B[m[1D[0;38;5;144m[0;38;5;144mc[0;38;5;242md ..(B[m[K(B[m[4D[?25h[?25l[0;38;5;144md[?25h[?25l(B[m[2D[0;38;5;144m[0;38;5;144mcd[0;38;5;253m (B[m[K[?25h[?25l(B[m[3D[0;38;5;144m[0;38;5;144mcd[0;38;5;253m [0;38;5;242m..(B[m[K(B[m[2D[?25h[?25l(B[m[3D[0;38;5;144m[0;38;5;144mcd[0;38;5;253m r(B[m[K[?25h[?25l(B[m[1D[0;4;38;5;252m[0;4;38;5;252mr[0;38;5;242moot(B[m[K(B[m[3D[?25h[?25l(B[m[1D[0;4;38;5;252m[0;4;38;5;252mroot/(B[m[K[?25h[?25l(B[m[5D[0;4;38;5;252m[0;4;38;5;252mroot/[0;38;5;242mbin(B[m[K(B[m[3D[?25h[?25l(B[m[5D[0;4;38;5;252m[0;4;38;5;252mroot/(B[m[K(B[m
+[?25h[?25l[?2004l[?25h(B[m7[0;94m[ble: EOF](B[m(B[m8[78C  [K[?25l[?2004h[?25h[?25l(B[m[2K]0;andrew@andrews-laptop: ~/cs161/root[0;1;32mandrew@andrews-laptop(B[m:[0;1;34m~/cs161/root(B[m$ [?25h[?25l[0;1;91m[0;1;91m.(B[m[K[?25h[?25l(B[m[1D[0;38;5;252m[0;38;5;252m.[0;38;5;242m/config ASST0(B[m[K(B[m[13D[?25h[?25l(B[m[1D[0;31m[0;31m./(B[m[K[?25h[?25l(B[m[2D[0;38;5;252m[0;38;5;252m./[0;38;5;242mconfig ASST0(B[m[K(B[m[12D[?25h[?25l(B[m[2D[0;38;5;252m[0;38;5;252m./[0;31ms(B[m[K[?25h[?25l(B[m[3D[0;38;5;252m[0;38;5;252m./[0;31ms[0;38;5;242mbin/(B[m[K(B[m[4D[?25h[?25l(B[m[3D[0;38;5;252m[0;38;5;252m./[0;31msy(B[m[K[?25h[?25l(B[m[4D[0;38;5;252m[0;38;5;252m./[0;38;5;144msy[0;38;5;242ms161(B[m[K(B[m[4D[?25h[?25l[0;38;5;144ms[?25h[?25l(B[m
+(B[m[1L[2K(B[m[2K[0;1;38;5;144msys161(B[m      [0;1;38;5;144msys161[0;38;5;144m-1.14(B[m[?25h[?25l(B[m[1A[18C[?25h[?25l(B[m[5D[0;1;38;5;252m[0;1;38;5;252m.[0;1;38;5;252m/[0;1;38;5;144ms[0;1;38;5;144my[0;1;38;5;144ms[0;1;38;5;144m1[0;1;38;5;144m6[0;1;38;5;144m1(B[m[K[?25h[?25l(B[m[8D[0;1;38;5;252m[0;1;38;5;252m.[0;1;38;5;252m/[0;1;38;5;144ms[0;1;38;5;144my[0;1;38;5;144ms[0;1;38;5;144m1[0;1;38;5;144m6[0;1;38;5;144m1[0;38;5;16;48;5;229m (B[m[K[?25h[?25l(B[m[9D[0;38;5;252m[0;38;5;252m./[0;38;5;144msys161[0;38;5;253m (B[m[1B[2K[1M(B[m[1A[45C[?25h[?25l(B[m[9D[0;38;5;252m[0;38;5;252m./[0;38;5;144msys161[0;38;5;253m k(B[m[K[?25h[?25l(B[m[1D[0;4;36m[0;4;36mk[0;38;5;242mernel(B[m[K(B[m[5D[?25h[?25l[0;4;36me[?25h[?25l(B[m
+(B[m[1L[2K(B[m[2K[0;1;4;36mkernel(B[m       [0;1;4;32mkernel[0;4;32m-ASST0(B[m[?25h[?25l(B[m[1A[22C[?25h[?25l(B[m[2D[0;1;4;36m[0;1;4;36mk[0;1;4;36me[0;1;4;36mr[0;1;4;36mn[0;1;4;36me[0;1;4;36ml(B[m[K[?25h[?25l(B[m[6D[0;4;36m[0;4;36mkernel(B[m[1B[2K[1M(B[m[1A[51C
+[?25h[?25l[?2004l[?25hsys161: Cannot open config file sys161.conf
+(B[m7[0;94m[ble: EOF](B[m(B[m8[78C  [K[?25l[0;91m[ble: exit 1](B[m
+[?2004h[?25h[?25l(B[m[2K]0;andrew@andrews-laptop: ~/cs161/root[0;1;32mandrew@andrews-laptop(B[m:[0;1;34m~/cs161/root(B[m$ [?25h[?25l[0;31m[0;31mc(B[m[K[?25h[?25l(B[m[1D[0;38;5;144m[0;38;5;144mc[0;38;5;242md root/(B[m[K(B[m[7D[?25h[?25l(B[m[1D[0;38;5;144m[0;38;5;144mcp(B[m[K[?25h[?25l(B[m
+
+
+
+
+(B[m[4A[5L[2K(B[m[1A[36C[0;38;5;144m[0;38;5;144mcp[0;38;5;242m $(grep -rl 'claude' /usr/share/applicati[0;38;5;242mons ~/.local/share/applications 2>/dev/null | head -1) ~/.local/share/applicatio[0;38;5;242mns/[K
+sed -i '/^Exec=/ s/$/ --ozone-platform=x11/' ~/.local/share/applications/claude[0;38;5;242m-desktop.desktop[K
+update-desktop-database ~/.local/share/applications(B[m[K(B[m[5A[13D[?25h[?25l(B[m[1B[2K[5M(B[m[1A[36C[0;38;5;144m[0;38;5;144mcp[0;38;5;253m (B[m[K[?25h[?25l(B[m
+
+
+
+
+(B[m[4A[5L[2K(B[m[1A[36C[0;38;5;144m[0;38;5;144mcp[0;38;5;253m [0;38;5;242m$(grep -rl 'claude' /usr/share/applicati[0;38;5;242mons ~/.local/share/applications 2>/dev/null | head -1) ~/.local/share/applicatio[0;38;5;242mns/[K
+sed -i '/^Exec=/ s/$/ --ozone-platform=x11/' ~/.local/share/applications/claude[0;38;5;242m-desktop.desktop[K
+update-desktop-database ~/.local/share/applications(B[m[K(B[m[5A[12D[?25h[?25l(B[m[1B[2K[5M(B[m[1A[36C[0;38;5;144m[0;38;5;144mcp[0;38;5;253m s(B[m[K[?25h[?25l(B[m[1D[0;4;38;5;252m[0;4;38;5;252ms[0;38;5;242mbin(B[m[K(B[m[3D[?25h[?25l(B[m[1D[0;38;5;253msy(B[m[K[?25h[?25l(B[m[2D[0;4;36m[0;4;36msy[0;38;5;242ms161(B[m[K(B[m[4D[?25h[?25l[0;4;36ms[?25h[?25l(B[m
+(B[m[1L[2K(B[m[2K[0;1;4;36msys161(B[m             [0;1;4;32msys161[0;4;32m-1.14(B[m        [0;1;4msys161[0;4m.conf.sample(B[m[?25h[?25l(B[m[1A[14D[?25h[?25l(B[m[3D[0;1;4;36m[0;1;4;36ms[0;1;4;36my[0;1;4;36ms[0;1;4;36m1[0;1;4;36m6[0;1;4;36m1(B[m[K[?25h[?25l(B[m[6D[0;1;38;5;253m[0;1;38;5;253ms[0;1;38;5;253my[0;1;38;5;253ms[0;1;38;5;253m1[0;1;38;5;253m6[0;1;38;5;253m1[0;38;5;16;48;5;229m.(B[m[K[?25h[?25l(B[m[1B[2K[0;1;4msys161.[0;4mconf.sample(B[m[?25h[?25l(B[m[1A[28C[?25h[?25l(B[m[7D[0;1;4m[0;1;4ms[0;1;4my[0;1;4ms[0;1;4m1[0;1;4m6[0;1;4m1[0;4;38;5;16;48;5;229m.[0;38;5;242mconf.sample(B[m[K(B[m[11D[?25h[?25l(B[m[7D[0;4m[0;4msys161.conf.sample[0;38;5;253m (B[m[K(B[m[1B[2K[1M(B[m[1A[58C[?25h[?25l(B[m[19D[0;4m[0;4msys161.conf.sample(B[m[K[?25h[?25l(B[m[18D[0;38;5;253msys161.conf.sampl(B[m[K[?25h[?25l(B[m[17D[0;38;5;253msys161.conf.samp(B[m[K[?25h[?25l(B[m[16D[0;38;5;253msys161.conf.sam(B[m[K[?25h[?25l(B[m[15D[0;38;5;253msys161.conf.sa(B[m[K[?25h[?25l(B[m[14D[0;38;5;253msys161.conf.s(B[m[K[?25h[?25l(B[m[13D[0;38;5;253msys161.conf.(B[m[K[?25h[?25l(B[m[12D[0;38;5;253msys161.conf(B[m[K[?25h[?25l(B[m[1D[?25h[?25l(B[m[1D[?25h[?25l(B[m[1D[?25h[?25l(B[m[1D[?25h[?25l(B[m[1D[?25h[?25l(B[m[1D[?25h[?25l(B[m[1D[?25h[?25l(B[m[1D[?25h[?25l(B[m[1D[?25h[?25l(B[m[1D[?25h[?25l(B[m[1D[?25h[?25l(B[m[3D[0;38;5;144m[0;38;5;144mcp[0;38;5;253m .sys161.conf(B[m[K(B[m[11D[?25h[?25l(B[m[1D[0;38;5;253m.[0;38;5;242msockets[0;38;5;253msys161.conf(B[m[K(B[m[18D[?25h[?25l(B[m[1D[0;38;5;253m..sys161.conf(B[m[K(B[m[11D[?25h[?25l(B[m[2D[0;4;38;5;252m[0;4;38;5;252m../[0;4msys161.conf(B[m[K(B[m[11D[?25h[?25l(B[m[3D[0;4;38;5;252m[0;4;38;5;252m../[0;38;5;242m.git[0;38;5;253msys161.conf(B[m[K(B[m[15D[?25h[?25l(B[m[3D[0;4;38;5;252m[0;4;38;5;252m../[0;4msys161.conf(B[m[K(B[m[10D[?25h[?25l(B[m[1C[?25h[?25l(B[m[1C[?25h[?25l(B[m[1C[?25h[?25l(B[m[1C[?25h[?25l(B[m[1C[?25h[?25l(B[m[1C[?25h[?25l(B[m[1C[?25h[?25l(B[m[1C[?25h[?25l(B[m[1C[?25h[?25l(B[m[1C[?25h[?25l(B[m[14D[0;4;38;5;252m[0;4;38;5;252m../[0;4msys161.conf[0;38;5;253m (B[m[K[?25h[?25l(B[m[15D[0;4;38;5;252m[0;4;38;5;252m../[0;4msys161.conf[0;38;5;253m [0;4;38;5;252m.(B[m[K[?25h[?25l(B[m[1D[0;4;38;5;252m[0;4;38;5;252m.[0;38;5;242msockets(B[m[K(B[m[7D[?25h[?25l(B[m[1D[0;4;38;5;252m[0;4;38;5;252m.(B[m[K(B[m
+[?25h[?25l[?2004l[?25h(B[m7[0;94m[ble: EOF](B[m(B[m8[78C  [K[?25l[?2004h[?25h[?25l(B[m[2K]0;andrew@andrews-laptop: ~/cs161/root[0;1;32mandrew@andrews-laptop(B[m:[0;1;34m~/cs161/root(B[m$ [?25h[?25l[0;38;5;144m[0;38;5;144mcp[0;38;5;253m [0;4;38;5;252m../[0;4msys161.conf[0;38;5;253m [0;4;38;5;252m.(B[m[K[?25h[?25l(B[m[19D[0;38;5;252m[0;38;5;252m./[0;38;5;144msys161[0;38;5;253m [0;4;36mkernel(B[m[K[?25h[?25l(B[m
+[?25h[?25l[?2004l[?25hsys161: System/161 release 1.14, compiled Sep  7 2026 12:49:03
+
+OS/161 base system version 1.10
+Copyright (c) 2000, 2001, 2002, 2003
+   President and Fellows of Harvard College.  All rights reserved.
+
+Put-your-group-name-here's system version 0 (ASST0 #1)
+
+Cpu is MIPS r2000/r3000
+1872k physical memory available
+Device probe...
+lamebus0 (system main bus)
+emu0 at lamebus0
+ltrace0 at lamebus0
+ltimer0 at lamebus0
+hardclock on ltimer0 (100 hz)
+beep0 at ltimer0
+rtclock0 at ltimer0
+lrandom0 at lamebus0
+random0 at lrandom0
+lser0 at lamebus0
+con0 at lser0
+pseudorand0 (virtual)
+
+OS/161 kernel [? for menu]: p p p /sbin/poweroff <return>
+Operation took 0.000162800 seconds
+OS/161 kernel [? for menu]: Shutting down.
+The system is halted.
+sys161: 790375860 cycles (7219405k, 18u, 783156437i)
+sys161: 3803 irqs 6 exns 0r/0w disk 30r/675w console 8r/0w/3m emufs 0r/0w net
+sys161: Elapsed real time: 31.617236 seconds (24.9983 mhz)
+sys161: Elapsed virtual time: 31.615034400 seconds (25 mhz)
+(B[m7[0;94m[ble: EOF](B[m(B[m8[78C  [K[?25l[?2004h[?25h[?25l(B[m[2K]0;andrew@andrews-laptop: ~/cs161/root[0;1;32mandrew@andrews-laptop(B[m:[0;1;34m~/cs161/root(B[m$ [?25h[?25l[0;31m[0;31me(B[m[K[?25h[?25l(B[m[1D[0;38;5;144m[0;38;5;144me[0;38;5;242mxit(B[m[K(B[m[3D[?25h[?25l[0;38;5;144mx[?25h[?25l[0;38;5;144mi[?25h[?25l[0;38;5;144mt(B[m[K[?25h[?25l(B[m
+[?25h[?25l[?2004l[?25h[0;94m[ble: exit](B[m
+
+Script done on 2026-09-09 11:25:03-05:00 [COMMAND_EXIT_CODE="0"]
