@@ -167,3 +167,4 @@ kmain(char *arguments)
 	/* Should not get here */
 	return 0;
 }
+// THIS IS A COMMENT
