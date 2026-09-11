@@ -161,7 +161,7 @@ LTLIBOBJS =
 MAINT = #
 MAINTAINER_MODE_FALSE = 
 MAINTAINER_MODE_TRUE = #
-MAKEINFO = /home/andrew/cs161/cs161-gdb-1.5/gdb-6.6+cs161/missing makeinfo --split-size=5000000
+MAKEINFO = makeinfo --split-size=5000000
 MKINSTALLDIRS = /home/andrew/cs161/cs161-gdb-1.5/./gdb-6.6+cs161/bfd/../mkinstalldirs
 MSGFMT = /usr/bin/msgfmt
 MSGMERGE = /usr/bin/msgmerge

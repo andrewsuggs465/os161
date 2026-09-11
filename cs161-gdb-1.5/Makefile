@@ -257,7 +257,7 @@ YACC = bison -y
 FLEX = flex
 LEX = flex
 M4 = m4
-MAKEINFO = /home/andrew/cs161/cs161-gdb-1.5/gdb-6.6+cs161/missing makeinfo
+MAKEINFO = makeinfo
 EXPECT = expect
 RUNTEST = runtest
 

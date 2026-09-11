@@ -80,16 +80,16 @@ extern u_int32_t dbflags;
  * Random number generator, using the random device.
  */
 #define RAND_MAX (randmax())
-u_int32_t randmax(void);
-u_int32_t random(void);
+u_int32_t randmax(void); // random number generator 32-bit integer, pass in void, gives you the max
+u_int32_t random(void); // random number generator, implemented in randmax
 
 /*
  * Kernel heap memory allocation. Like malloc/free.
  * If out of memory, kmalloc returns NULL.
  */
-void *kmalloc(size_t sz);
-void kfree(void *ptr);
-void kheap_printstats(void);
+void *kmalloc(size_t sz); //kmalloc allocates specified # of bytes sz
+void kfree(void *ptr); //free bytes from ptr
+void kheap_printstats(void); //give status of heap
 
 /*
  * C string functions. 
@@ -97,23 +97,23 @@ void kheap_printstats(void);
  * kstrdup is like strdup, but calls kmalloc instead of malloc.
  * If out of memory, it returns NULL.
  */
-size_t strlen(const char *);
+size_t strlen(const char *); //length of string array (char)
 int strcmp(const char *, const char *);
-char *strcpy(char *, const char *);
-char *strcat(char *, const char *);
-char *kstrdup(const char *);
-char *strchr(const char *, int);
+char *strcpy(char *, const char *); //copy string * to const char *
+char *strcat(char *, const char *); //concatenate two strings
+char *kstrdup(const char *); //duplicate a string, returns char array
+char *strchr(const char *, int); 
 char *strrchr(const char *, int);
 char *strtok_r(char *buf, const char *seps, char **context);
 
-void *memcpy(void *, const void *, size_t);
-void *memmove(void *, const void *, size_t);
+void *memcpy(void *, const void *, size_t); //copy a memory address to another with size t using ptrs
+void *memmove(void *, const void *, size_t); //move a memory address from given pointer with size t
 void bzero(void *, size_t);
 int atoi(const char *);
 
 int snprintf(char *buf, size_t maxlen, const char *fmt, ...) __PF(3,4);
 
-const char *strerror(int errcode);
+const char *strerror(int errcode); //standard c error function, return an int error code which can be associated with a string
 
 /*
  * setjmp/longjmp functionality.
@@ -140,8 +140,8 @@ void beep(void);
  * kprintf_init sets up a lock for kprintf and should be called during boot
  * once malloc is available and before any additional threads are created.
  */
-int kprintf(const char *fmt, ...) __PF(1,2);
-void panic(const char *fmt, ...) __PF(1,2);
+int kprintf(const char *fmt, ...) __PF(1,2); //kprintf is like printf in c but for this kenrnel
+void panic(const char *fmt, ...) __PF(1,2); //bad bad bad bad bad
 
 void kgets(char *buf, size_t maxbuflen);
 

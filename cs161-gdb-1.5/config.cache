@@ -23,6 +23,7 @@ ac_cv_prog_LD=${ac_cv_prog_LD='ld'}
 ac_cv_prog_LEX=${ac_cv_prog_LEX='flex'}
 ac_cv_prog_LN_S=${ac_cv_prog_LN_S='ln -s'}
 ac_cv_prog_M4=${ac_cv_prog_M4='m4'}
+ac_cv_prog_MAKEINFO=${ac_cv_prog_MAKEINFO='makeinfo'}
 ac_cv_prog_NM=${ac_cv_prog_NM='nm'}
 ac_cv_prog_OBJCOPY=${ac_cv_prog_OBJCOPY='objcopy'}
 ac_cv_prog_OBJDUMP=${ac_cv_prog_OBJDUMP='objdump'}

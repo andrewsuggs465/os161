@@ -28,9 +28,8 @@ hostinfo               = unknown
 /bin/universe          = unknown
 
 PATH: /home/andrew/cs161/bin
-PATH: /home/andrew/cs161/bin
-PATH: /home/andrew/.nvm/versions/node/v22.22.0/bin
 PATH: /usr/local/MATLAB/R2025a/bin
+PATH: /home/andrew/.nvm/versions/node/v22.22.0/bin
 PATH: /opt/st/cubeprog/bin
 PATH: /opt/st/arm-gcc/bin
 PATH: /home/andrew/.local/bin
@@ -444,7 +443,7 @@ LTLIBOBJS=''
 MAINT='#'
 MAINTAINER_MODE_FALSE=''
 MAINTAINER_MODE_TRUE='#'
-MAKEINFO='/home/andrew/cs161/cs161-gdb-1.5/gdb-6.6+cs161/missing makeinfo --split-size=5000000'
+MAKEINFO='makeinfo --split-size=5000000'
 MKINSTALLDIRS='/home/andrew/cs161/cs161-gdb-1.5/./gdb-6.6+cs161/opcodes/../mkinstalldirs'
 MSGFMT='/usr/bin/msgfmt'
 MSGMERGE='/usr/bin/msgmerge'

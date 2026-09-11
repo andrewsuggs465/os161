@@ -155,7 +155,7 @@ s%@BISON@%bison%g
 s%@M4@%m4%g
 s%@LEX@%flex%g
 s%@FLEX@%flex%g
-s%@MAKEINFO@%/home/andrew/cs161/cs161-gdb-1.5/gdb-6.6+cs161/missing makeinfo%g
+s%@MAKEINFO@%makeinfo%g
 s%@EXPECT@%expect%g
 s%@RUNTEST@%runtest%g
 s%@AR@%ar%g

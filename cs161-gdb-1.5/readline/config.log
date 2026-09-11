@@ -28,9 +28,8 @@ hostinfo               = unknown
 /bin/universe          = unknown
 
 PATH: /home/andrew/cs161/bin
-PATH: /home/andrew/cs161/bin
-PATH: /home/andrew/.nvm/versions/node/v22.22.0/bin
 PATH: /usr/local/MATLAB/R2025a/bin
+PATH: /home/andrew/.nvm/versions/node/v22.22.0/bin
 PATH: /opt/st/cubeprog/bin
 PATH: /opt/st/arm-gcc/bin
 PATH: /home/andrew/.local/bin
