@@ -1,2 +1,90 @@
-1) #define sp  $29    /* stack pointer */  /home/andrew/cs161/os161/kern/arch/mips/include/asmdefs.h
-2) lamebus0 /home/andrew/cs161/os161/kern/conf/ASST0
+1) arch/mips/include/asmdefs.h
+    #define sp  $29
+2) dev/lamebus/lamebus.h
+    lamebus
+3) arch/mips/include/spl.h
+    splhigh()    sets spl to the highest value, disabling all interrupts.
+    spl0()       sets spl to 0, enabling all interrupts.
+
+4) arch/mips/include/types.h
+    /*
+    * Basic integer types, and some related definitions, for MIPS.
+    * This file is made visible to userland.
+    *
+    * Note: while we define int64_t and u_int64_t, actually using them
+    * will in some cases cause odd link errors. This has to do with the
+    * way gcc implements 64-bit arithmetic on 32-bit processors. When you
+    * build gcc, it creates a library called libgcc.a that contains,
+    * among other things, implementations of the functions gcc expects to
+    * be able to call for doing 64-bit arithmetic. Unfortunately, you
+    * don't really want to use the standard libgcc.a in a kernel, and
+    * because of the circumstances with the compiler and toolchain in
+    * cs161 it's awkward to use libgcc.a in userlevel programs too, so we
+    * just don't support it. So don't use 64-bit integers unless you're
+    * prepared to cope with these issues yourself.
+    */
+5) arch/mips/include/spl.h
+    int
+6) arch/mips/include/spl.h
+    #define SPL_HIGH   15 
+7) include/clock.h
+    #define HZ  10000
+    #else
+    /* More realistic value */
+    #define HZ  100
+8) include/device.h
+    void dev_bootstrap(void);
+
+    void machdep_dev_bootstrap(void);
+9) include/kern/sfs.h
+    32
+10) include/kern/sfs.h
+    15
+11) include/fs.h
+    struct fs {
+	int           (*fs_sync)(struct fs *);
+	const char   *(*fs_getvolname)(struct fs *);
+	struct vnode *(*fs_getroot)(struct fs *);
+	int           (*fs_unmount)(struct fs *);
+
+	void *fs_data;
+};
+12) thread/thread.c
+    void
+    thread_sleep(const void *addr)
+    {
+        // may not sleep in an interrupt handler
+        assert(in_interrupt==0);
+        
+        curthread->t_sleepaddr = addr;
+        mi_switch(S_SLEEP);
+        curthread->t_sleepaddr = NULL;
+    }
+13) include/kern/types.h
+    typedef int32_t pid_t;   /* Process ID */
+14) include/vnode.h
+    24
+15) include/kern/limits.h
+    #define PATH_MAX   1024
+16) include/kern/callno.h
+    #define SYS_reboot       8
+17) include/kern/unistd.h
+    #define STDIN_FILENO  0      /* Standard input */
+18) main/main.c
+    The scheduler needs to be called first. 
+    scheduler_bootstrap();
+	thread_bootstrap();
+19) thread/thread.c
+    (Zombies are threads/processes that have exited but not been fully deleted yet.)
+20) thread/scheduler.c
+    32 entries
+    runqueue = q_create(32);
+21) fs/vfs/vfslist.c
+    kd_name    - Name of device (eg, "lhd0"). Should always be set to a valid string.
+22) fs/vfs/vfslist.c
+    kd_rawname - Name of raw device (eg, "lhd0raw"). Is non-NULL if and only if this device can have a filesystem mounted on it.
+23) include/vnode.h
+    struct lock *vn_countlock; 
+24) arch/mips/conf/conf.arch
+    MIPS devices
+    
