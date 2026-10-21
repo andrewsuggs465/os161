@@ -18,7 +18,7 @@
 #include <lib.h>
 #include <test.h>
 #include <thread.h>
-
+#include <synch.h>
 
 /*
  * 
@@ -44,6 +44,42 @@
 
 #define NMICE 2
 
+/*
+ * Number of times each animal eats. The spec does not fix this.
+ */
+
+#define NMEALS 4
+
+/*
+ * 
+ * Shared state
+ *
+ */
+
+/*
+ * turnstile:   every arriving animal passes through it. An animal waiting
+ *              for the room keeps holding it, so the other species cannot
+ *              keep cutting in front of it. This is what prevents starvation.
+ * room:        held by one species at a time. The first animal of a species
+ *              to enter takes it, and the last one out gives it back.
+ * cat_mutex:   protects cats_in_room.
+ * mouse_mutex: protects mice_in_room.
+ * dishes:      counts free dishes, so at most NFOODBOWLS animals eat at once.
+ * dish_mutex:  protects dish_used[].
+ * done:        each thread V()s it when it finishes, so the driver can wait.
+ */
+
+ static struct semaphore *turnstile;
+ static struct semaphore *room;
+ static struct semaphore *cat_mutex;
+ static struct semaphore *mouse_mutex;
+ static struct semaphore *dishes;
+ static struct semaphore *dish_mutex;
+ static struct semaphore *done;
+
+ static int cats_in_room;
+ static int mice_in_room;
+ static int dish_used[NFOODBOWLS];
 
 /*
  * 
@@ -51,9 +87,87 @@
  * 
  */
 
+ /*
+ * enter_room()
+ *
+ * Lightswitch on: the first animal of a species to arrive takes the
+ * room, which locks out the other species.
+ */
+
+static
+void
+enter_room(struct semaphore *mutex, int *count)
+{
+        P(mutex);
+        (*count)++;
+        if (*count == 1) {
+                P(room);
+        }
+        V(mutex);
+}
 
 /*
- * catsem()
+ * leave_room()
+ *
+ * Lightswitch off: the last animal of a species to leave gives the room
+ * back, so the other species can enter.
+ */
+
+static
+void
+leave_room(struct semaphore *mutex, int *count)
+{
+        P(mutex);
+        (*count)--;
+        if (*count == 0) {
+                V(room);
+        }
+        V(mutex);
+}
+
+/*
+ * take_dish()
+ *
+ * Waits for a free dish, claims it, and returns its index.
+ */
+
+ static
+ int
+ take_dish(void)
+ {
+        int i;
+
+        P(dishes);
+        P(dish_mutex);
+        for (i = 0; i < NFOODBOWLS; i++) {
+                if (!dish_used[i]) {
+                        dish_used[i] = 1;
+                        break;
+                }
+        }
+        V(dish_mutex);
+
+        return i;
+ }
+
+ /*
+ * release_dish()
+ *
+ * Marks a dish free and wakes one animal waiting for a dish.
+ */
+
+ static
+ void
+ release_dish(int dish)
+ {
+        P(dish_mutex);
+        dish_used[dish] = 0;
+        V(dish_mutex);
+        V(dish_mutex);
+ }
+
+/*
+ * cat_thread()
  *
  * Arguments:
  *      void * unusedpointer: currently unused.
@@ -69,20 +183,39 @@
 
 static
 void
-catsem(void * unusedpointer, 
-       unsigned long catnumber)
+cat_thread(void * unusedpointer,
+           unsigned long catnumber)
 {
         /*
          * Avoid unused variable warnings.
          */
 
         (void) unusedpointer;
-        (void) catnumber;
+        int meal, dish;
+
+        for (meal = 0; meal < NMEALS; meal++) {
+                P(turnstile);
+                enter_room(cat_mutex, &cats_in_room);
+                V(turnstile);
+
+                dish = take_dish();
+                kprintf("cat %lu begins eating at dish %d\n",
+                        catnumber, dish + 1);
+                clocksleep(1);
+                kprintf("cat %lu finishes eating at dish %d\n",
+                        catnumber, dish + 1);
+                release_dish(dish);
+
+                leave_room(cat_mutex, &cats_in_room);
+        }
+
+        V(done);
+
 }
         
 
 /*
- * mousesem()
+ * mouse_thread()
  *
  * Arguments:
  *      void * unusedpointer: currently unused.
@@ -99,15 +232,32 @@ catsem(void * unusedpointer,
 
 static
 void
-mousesem(void * unusedpointer, 
-         unsigned long mousenumber)
+mouse_thread(void * unusedpointer, 
+             unsigned long mousenumber)
 {
         /*
          * Avoid unused variable warnings.
          */
 
         (void) unusedpointer;
-        (void) mousenumber;
+        int meal, dish;
+
+        for (int meal = 0; meal < NMEALS; meal++) {
+                P(turnstile);
+                enter_room(mouse_mutex, &mice_in_room);
+                V(turnstile);
+
+                dish = take_dish();
+
+                clocksleep(1);
+                kprintf("mouse %lu begins eating at dish %d\n",
+                        mousenumber, dish + 1);
+                release_dish(dish);
+                kprintf("mouse %lu finishes eating at dish %d\n",
+                        mousenumber, dish + 1);        
+                leave_room(mouse_mutex, &mice_in_room);
+        }
+        v(done);
 }
 
 
@@ -122,7 +272,7 @@ mousesem(void * unusedpointer,
  *      0 on success.
  *
  * Notes:
- *      Driver code to start up catsem() and mousesem() threads.  Change this 
+ *      Driver code to start up cat_thread() and mouse_thread() threads.  Change this 
  *      code as necessary for your solution.
  */
 
@@ -138,9 +288,26 @@ catmousesem(int nargs,
 
         (void) nargs;
         (void) args;
-   
+        
         /*
-         * Start NCATS catsem() threads.
+         * Create the shared semaphores before any thread can use them.
+         */
+
+         turnstile = sem_create("turnstile", 1);
+         room = sem_create("room", 1);
+         cat_mutex = sem_create("cat_mutex", 1);
+         mouse_mutex = sem_create("mose_mutex", 1);
+         dishes = sem_create("dishes", NFOODBOWLS);
+         dish_mutex = sem_create("dish_mutex", 1);
+         done = sem_create("done", 0);
+
+         if (turnstile == NULL || room == NULL || cat_mutex == NULL ||
+            mouse_mutex == NULL || dishes == NULL || dish_mutex == NULL ||
+            done == NULL) {
+                panic("catmousesem: sem_create failed\n");
+        }
+        /*
+         * Start NCATS cat_thread() threads.
          */
 
         for (index = 0; index < NCATS; index++) {
@@ -148,7 +315,7 @@ catmousesem(int nargs,
                 error = thread_fork("catsem Thread", 
                                     NULL, 
                                     index, 
-                                    catsem, 
+                                    cat_thread, 
                                     NULL
                                     );
                 
@@ -165,7 +332,7 @@ catmousesem(int nargs,
         }
         
         /*
-         * Start NMICE mousesem() threads.
+         * Start NMICE mouse_thread() threads.
          */
 
         for (index = 0; index < NMICE; index++) {
@@ -173,7 +340,7 @@ catmousesem(int nargs,
                 error = thread_fork("mousesem Thread", 
                                     NULL, 
                                     index, 
-                                    mousesem, 
+                                    mouse_thread, 
                                     NULL
                                     );
                 
@@ -188,6 +355,24 @@ catmousesem(int nargs,
                               );
                 }
         }
+
+        /*
+         * Wait for every cat and mouse to finish, then clean up.
+         */
+
+        index = 0;
+        while(index < NCATS + NMICE) {
+                P(done);
+                index ++;
+        }
+        
+        sem_destroy(turnstile);
+        sem_destroy(room);
+        sem_destroy(cat_mutex);
+        sem_destroy(mouse_mutex);
+        sem_destroy(dishes);
+        sem_destroy(dish_mutex);
+        sem_destroy(done);
 
         return 0;
 }
