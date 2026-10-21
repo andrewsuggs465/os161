@@ -1,0 +1,14 @@
+{
+  // Global/profile settings disable IntelliSense for STM32's clangd;
+  // turn it back on for OS/161 only.
+  "C_Cpp.intelliSenseEngine": "default",
+  "clangd.enable": false,
+  "C_Cpp.default.includePath": [
+    "${workspaceFolder}/kern/include",
+    // Holds the build's machine -> arch/mips/include symlink and generated
+    // autoconf.h / opt-*.h. Change ASST1 if you config a different kernel.
+    "${workspaceFolder}/kern/compile/ASST1"
+  ],
+  "C_Cpp.default.defines": ["_KERNEL"],
+  "C_Cpp.default.compilerPath": ""
+}
