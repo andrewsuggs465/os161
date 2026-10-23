@@ -1,0 +1,392 @@
+diff --git a/.vscode/settings.json b/.vscode/settings.json
+index bc89bd04..cbe8b196 100644
+--- a/.vscode/settings.json
++++ b/.vscode/settings.json
+@@ -4,10 +4,10 @@
+   "C_Cpp.intelliSenseEngine": "default",
+   "clangd.enable": false,
+   "C_Cpp.default.includePath": [
+-    "${workspaceFolder}/kern/include",
++    "${workspaceFolder}/os161/kern/include",
+     // Holds the build's machine -> arch/mips/include symlink and generated
+     // autoconf.h / opt-*.h. Change ASST1 if you config a different kernel.
+-    "${workspaceFolder}/kern/compile/ASST1"
++    "${workspaceFolder}/os161/kern/compile/ASST1"
+   ],
+   "C_Cpp.default.defines": ["_KERNEL"],
+   "C_Cpp.default.compilerPath": ""
+diff --git a/README.md b/README.md
+index 26bf189c..6f571bfb 100644
+--- a/README.md
++++ b/README.md
+@@ -5,8 +5,19 @@
+ - Main: Base version with compiled tools
+ - Proj2: Complete project 2 files
+ - Proj3: Complete project 3 files
++- Proj4: Complete project 4 files
+ 
+ **Each project does not depend upon the previous project.**
+   
+ Use this for new project:
+ `git switch -c proj4 main` 
++
++## Build Instructions
++``` 
++export PATH=~/cs161/bin:$PATH
++cd ~/cs161/os161/kern/compile/ASST1
++make depend
++make
++make install
++cd ~/cs161/root && ../sys161-1.14/build-sys161/sys161 kernel
++```
+\ No newline at end of file
+diff --git a/os161/kern/asst1/catsem.c b/os161/kern/asst1/catsem.c
+index dcb257bc..843f4bfc 100644
+--- a/os161/kern/asst1/catsem.c
++++ b/os161/kern/asst1/catsem.c
+@@ -18,7 +18,7 @@
+ #include <lib.h>
+ #include <test.h>
+ #include <thread.h>
+-
++#include <synch.h>
+ 
+ /*
+  * 
+@@ -44,6 +44,42 @@
+ 
+ #define NMICE 2
+ 
++/*
++ * Number of times each animal eats. The spec does not fix this.
++ */
++
++#define NMEALS 4
++
++/*
++ * 
++ * Shared state
++ *
++ */
++
++/*
++ * turnstile:   every arriving animal passes through it. An animal waiting
++ *              for the room keeps holding it, so the other species cannot
++ *              keep cutting in front of it. This is what prevents starvation.
++ * room:        held by one species at a time. The first animal of a species
++ *              to enter takes it, and the last one out gives it back.
++ * cat_mutex:   protects cats_in_room.
++ * mouse_mutex: protects mice_in_room.
++ * dishes:      counts free dishes, so at most NFOODBOWLS animals eat at once.
++ * dish_mutex:  protects dish_used[].
++ * done:        each thread V()s it when it finishes, so the driver can wait.
++ */
++
++ static struct semaphore *turnstile;
++ static struct semaphore *room;
++ static struct semaphore *cat_mutex;
++ static struct semaphore *mouse_mutex;
++ static struct semaphore *dishes;
++ static struct semaphore *dish_mutex;
++ static struct semaphore *done;
++
++ static int cats_in_room;
++ static int mice_in_room;
++ static int dish_used[NFOODBOWLS];
+ 
+ /*
+  * 
+@@ -51,9 +87,87 @@
+  * 
+  */
+ 
++ /*
++ * enter_room()
++ *
++ * Lightswitch on: the first animal of a species to arrive takes the
++ * room, which locks out the other species.
++ */
++
++static
++void
++enter_room(struct semaphore *mutex, int *count)
++{
++        P(mutex);
++        (*count)++;
++        if (*count == 1) {
++                P(room);
++        }
++        V(mutex);
++}
+ 
+ /*
+- * catsem()
++ * leave_room()
++ *
++ * Lightswitch off: the last animal of a species to leave gives the room
++ * back, so the other species can enter.
++ */
++
++static
++void
++leave_room(struct semaphore *mutex, int *count)
++{
++        P(mutex);
++        (*count)--;
++        if (*count == 0) {
++                V(room);
++        }
++        V(mutex);
++}
++
++/*
++ * take_dish()
++ *
++ * Waits for a free dish, claims it, and returns its index.
++ */
++
++ static
++ int
++ take_dish(void)
++ {
++        int i;
++
++        P(dishes);
++        P(dish_mutex);
++        for (i = 0; i < NFOODBOWLS; i++) {
++                if (!dish_used[i]) {
++                        dish_used[i] = 1;
++                        break;
++                }
++        }
++        V(dish_mutex);
++
++        return i;
++ }
++
++ /*
++ * release_dish()
++ *
++ * Marks a dish free and wakes one animal waiting for a dish.
++ */
++
++ static
++ void
++ release_dish(int dish)
++ {
++        P(dish_mutex);
++        dish_used[dish] = 0;
++        V(dish_mutex);
++        V(dishes);
++ }
++
++/*
++ * cat_thread()
+  *
+  * Arguments:
+  *      void * unusedpointer: currently unused.
+@@ -69,20 +183,39 @@
+ 
+ static
+ void
+-catsem(void * unusedpointer, 
+-       unsigned long catnumber)
++cat_thread(void * unusedpointer,
++           unsigned long catnumber)
+ {
+         /*
+          * Avoid unused variable warnings.
+          */
+ 
+         (void) unusedpointer;
+-        (void) catnumber;
++        int meal, dish;
++
++        for (meal = 0; meal < NMEALS; meal++) {
++                P(turnstile);
++                enter_room(cat_mutex, &cats_in_room);
++                V(turnstile);
++
++                dish = take_dish();
++                kprintf("cat %lu begins eating at dish %d\n",
++                        catnumber, dish + 1);
++                clocksleep(1);
++                kprintf("cat %lu finishes eating at dish %d\n",
++                        catnumber, dish + 1);
++                release_dish(dish);
++
++                leave_room(cat_mutex, &cats_in_room);
++        }
++
++        V(done);
++
+ }
+         
+ 
+ /*
+- * mousesem()
++ * mouse_thread()
+  *
+  * Arguments:
+  *      void * unusedpointer: currently unused.
+@@ -99,15 +232,33 @@ catsem(void * unusedpointer,
+ 
+ static
+ void
+-mousesem(void * unusedpointer, 
+-         unsigned long mousenumber)
++mouse_thread(void * unusedpointer, 
++             unsigned long mousenumber)
+ {
+         /*
+          * Avoid unused variable warnings.
+          */
+ 
+         (void) unusedpointer;
+-        (void) mousenumber;
++        int meal, dish;
++
++        for (meal = 0; meal < NMEALS; meal++) {
++                P(turnstile);
++                enter_room(mouse_mutex, &mice_in_room);
++                V(turnstile);
++
++                dish = take_dish();
++                kprintf("mouse %lu begins eating at dish %d\n",
++                        mousenumber, dish + 1);
++                clocksleep(1);
++                kprintf("mouse %lu finishes eating at dish %d\n",
++                        mousenumber, dish + 1);
++                release_dish(dish);
++
++                leave_room(mouse_mutex, &mice_in_room);
++        }
++
++        V(done);
+ }
+ 
+ 
+@@ -122,7 +273,7 @@ mousesem(void * unusedpointer,
+  *      0 on success.
+  *
+  * Notes:
+- *      Driver code to start up catsem() and mousesem() threads.  Change this 
++ *      Driver code to start up cat_thread() and mouse_thread() threads.  Change this 
+  *      code as necessary for your solution.
+  */
+ 
+@@ -138,9 +289,26 @@ catmousesem(int nargs,
+ 
+         (void) nargs;
+         (void) args;
+-   
++        
+         /*
+-         * Start NCATS catsem() threads.
++         * Create the shared semaphores before any thread can use them.
++         */
++
++         turnstile = sem_create("turnstile", 1);
++         room = sem_create("room", 1);
++         cat_mutex = sem_create("cat_mutex", 1);
++         mouse_mutex = sem_create("mouse_mutex", 1);
++         dishes = sem_create("dishes", NFOODBOWLS);
++         dish_mutex = sem_create("dish_mutex", 1);
++         done = sem_create("done", 0);
++
++         if (turnstile == NULL || room == NULL || cat_mutex == NULL ||
++            mouse_mutex == NULL || dishes == NULL || dish_mutex == NULL ||
++            done == NULL) {
++                panic("catmousesem: sem_create failed\n");
++        }
++        /*
++         * Start NCATS cat_thread() threads.
+          */
+ 
+         for (index = 0; index < NCATS; index++) {
+@@ -148,7 +316,7 @@ catmousesem(int nargs,
+                 error = thread_fork("catsem Thread", 
+                                     NULL, 
+                                     index, 
+-                                    catsem, 
++                                    cat_thread, 
+                                     NULL
+                                     );
+                 
+@@ -165,7 +333,7 @@ catmousesem(int nargs,
+         }
+         
+         /*
+-         * Start NMICE mousesem() threads.
++         * Start NMICE mouse_thread() threads.
+          */
+ 
+         for (index = 0; index < NMICE; index++) {
+@@ -173,7 +341,7 @@ catmousesem(int nargs,
+                 error = thread_fork("mousesem Thread", 
+                                     NULL, 
+                                     index, 
+-                                    mousesem, 
++                                    mouse_thread, 
+                                     NULL
+                                     );
+                 
+@@ -189,6 +357,24 @@ catmousesem(int nargs,
+                 }
+         }
+ 
++        /*
++         * Wait for every cat and mouse to finish, then clean up.
++         */
++
++        index = 0;
++        while(index < NCATS + NMICE) {
++                P(done);
++                index ++;
++        }
++        
++        sem_destroy(turnstile);
++        sem_destroy(room);
++        sem_destroy(cat_mutex);
++        sem_destroy(mouse_mutex);
++        sem_destroy(dishes);
++        sem_destroy(dish_mutex);
++        sem_destroy(done);
++
+         return 0;
+ }
+ 
+diff --git a/os161/kern/compile/ASST1/depend.mk b/os161/kern/compile/ASST1/depend.mk
+index 38619791..ac054690 100644
+--- a/os161/kern/compile/ASST1/depend.mk
++++ b/os161/kern/compile/ASST1/depend.mk
+@@ -103,7 +103,8 @@ catlock.o: ../../asst1/catlock.c ../../include/types.h machine/types.h \
+   ../../include/test.h ../../include/thread.h machine/pcb.h
+ catsem.o: ../../asst1/catsem.c ../../include/types.h machine/types.h \
+   ../../include/kern/types.h ../../include/lib.h machine/setjmp.h \
+-  ../../include/test.h ../../include/thread.h machine/pcb.h
++  ../../include/test.h ../../include/thread.h machine/pcb.h \
++  ../../include/synch.h
+ sfs_vnode.o: ../../fs/sfs/sfs_vnode.c ../../include/types.h \
+   machine/types.h ../../include/kern/types.h ../../include/lib.h \
+   machine/setjmp.h ../../include/synch.h ../../include/array.h \
+diff --git a/project4/exercises.md b/project4/exercises.md
+new file mode 100644
+index 00000000..45abc32a
+--- /dev/null
++++ b/project4/exercises.md
+@@ -0,0 +1,14 @@
++# Project 4 Exercises (Option 1, Semaphores)
++
++## 1. Avoiding Starvation
++
++The solution uses semaphores for three things: a room that only one species can hold at a time, a turnstile in front of the room, and a counting semaphore for the two dishes. Each species uses a lightswitch on the room, so the first cat in takes the room and the last cat out gives it back, and the mice do the same with their own counter. This keeps a cat and a mouse from eating at the same time, but on its own it lets one species starve the other, because if cats keep arriving before the last cat leaves, the room is never released.
++
++The turnstile fixes this problem. Every animal passes through it before entering the room. When a mouse arrives while cats are eating, it takes the turnstile and then waits on the room while still holding it, so a new cat blocks at the turnstile instead of joining the cats already eating. Once those cats finish, the last one gives up the room and the mouse gets in. The same thing happens the other way when a cat arrives while the mice are eating. With `seed=1`, all 6 cats and both mice ate 4 times each.
++
++
++## 2. Experience and Principles
++
++The design was straightforward, most of the time went into small mistakes the compiler cannot catch. The first version released a dish by calling `V()` on the dish mutex twice instead of once on the mutex and once on the dish count. The dishes were never given back, so after two animals ate everyone else blocked, and the mutex count went up to 2 so it no longer gave mutual exclusion. The mice also printed their begin and finish lines outside the time they held the dish, so the output showed two animals at the same dish even though the locking was correct. Setting the random seed in `sys161.conf` made every run the same, so each fix was easy to check.
++
++So, every `P()` needs a matching `V()` on the same semaphore, and a missing or doubled `V()` shows up later as a deadlock instead of right away. Each semaphore should have one job: mutual exclusion (starts at 1), counting a resource (starts at the number of resources), or signaling (starts at 0). Taking the semaphores in the same order in every thread prevents a circular wait. Mutual exclusion and fairness are separate problems, and fairness needed its own semaphore. Critical sections should be short, so no mutex is held while an animal is eating.
