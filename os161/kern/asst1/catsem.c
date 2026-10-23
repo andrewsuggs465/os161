@@ -163,7 +163,7 @@ leave_room(struct semaphore *mutex, int *count)
         P(dish_mutex);
         dish_used[dish] = 0;
         V(dish_mutex);
-        V(dish_mutex);
+        V(dishes);
  }
 
 /*
@@ -242,22 +242,23 @@ mouse_thread(void * unusedpointer,
         (void) unusedpointer;
         int meal, dish;
 
-        for (int meal = 0; meal < NMEALS; meal++) {
+        for (meal = 0; meal < NMEALS; meal++) {
                 P(turnstile);
                 enter_room(mouse_mutex, &mice_in_room);
                 V(turnstile);
 
                 dish = take_dish();
-
-                clocksleep(1);
                 kprintf("mouse %lu begins eating at dish %d\n",
                         mousenumber, dish + 1);
-                release_dish(dish);
+                clocksleep(1);
                 kprintf("mouse %lu finishes eating at dish %d\n",
-                        mousenumber, dish + 1);        
+                        mousenumber, dish + 1);
+                release_dish(dish);
+
                 leave_room(mouse_mutex, &mice_in_room);
         }
-        v(done);
+
+        V(done);
 }
 
 
@@ -296,7 +297,7 @@ catmousesem(int nargs,
          turnstile = sem_create("turnstile", 1);
          room = sem_create("room", 1);
          cat_mutex = sem_create("cat_mutex", 1);
-         mouse_mutex = sem_create("mose_mutex", 1);
+         mouse_mutex = sem_create("mouse_mutex", 1);
          dishes = sem_create("dishes", NFOODBOWLS);
          dish_mutex = sem_create("dish_mutex", 1);
          done = sem_create("done", 0);
